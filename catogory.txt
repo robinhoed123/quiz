@@ -1,6 +1,6 @@
 dieren
-D:\school\quiz\dieren.txt
+D:/school/quiz/dieren.txt
 Nintendo
 D:/school/quiz/nintendo.txt
-ww2
-D:\school\quiz\ww2.txt
+Quinten
+D:/school/quiz/quinten.txt

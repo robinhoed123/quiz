@@ -26,7 +26,7 @@ def start_quiz():
     quiz_window.title("Quiz")
 
     # Lees de quizvragen uit het bestand
-    with open("D:/school/quiz/nintendo.txt", 'r', encoding='utf-8') as file:
+    with open(quizepad, 'r', encoding='utf-8') as file:
         lines = file.readlines()
     print(lines)    
     questions = []
@@ -128,7 +128,7 @@ def show_results(score):
     result_label = ui.CTkLabel(result_window, text=f"Je score is: {score}", font=("Arial", 30))
     result_label.pack(pady=40)
 
-    replay_button = ui.CTkButton(result_window, text="Opnieuw spelen", width=button_width, height=button_height, font=button_font, command=start_quiz)
+    replay_button = ui.CTkButton(result_window, text="Opnieuw spelen", width=button_width, height=button_height, font=button_font, command=lambda: [result_window.destroy(), start_quiz()])
     replay_button.pack(pady=20)
     close_button = ui.CTkButton(result_window, text="Sluiten", width=button_width, height=button_height, font=button_font, command=lambda: [result_window.destroy(), home_start()])
     close_button.pack(pady=20)
@@ -184,10 +184,10 @@ def Open_Quiz_setup(home):
     def validate_name(name):
         if not name:
             error_label.configure(text="Naam mag niet leeg zijn")
-            return
+            return 1
         if len(name) > 10:
             error_label.configure(text="Naam mag niet langer zijn dan 10 karakters")
-            return
+            return 1
         if not re.match("^[a-zA-Z0-9]*$", name):    
             error_label.configure(text="Naam mag alleen letters en cijfers bevatten")
             return 1
@@ -197,14 +197,14 @@ def Open_Quiz_setup(home):
     def next():
         global naam
         naam = name_entry.get()
-        validate_name(naam)
-        if validate_name(naam):
+        if validate_name(naam)==1:
             return  # Stop als de naam ongeldig is
-        if not quizepad:
+        elif not quizepad:
             error_label.configure(text="Selecteer een categorie")
             return
-        Quiz_setup.withdraw()
-        start_quiz()
+        else:
+            Quiz_setup.withdraw()
+            start_quiz()
 
     next_button = ui.CTkButton(setup_frame, text="Next", width=button_width, height=button_height, font=button_font, command=next)
     next_button.pack(pady=20)
